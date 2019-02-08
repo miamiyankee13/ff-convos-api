@@ -12,7 +12,7 @@ const config = require('../config');
 const jsonParser = bodyParser.json();
 
 //Create router instance
-const router = express.router();
+const router = express.Router();
 
 //Declare function to handle JWT creation
 const createAuthToken = function(user) {

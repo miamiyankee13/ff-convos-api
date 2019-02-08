@@ -33,7 +33,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 //Enable use of routers
-app.use('api/auth', authRouter);
+app.use('/api/auth', authRouter);
 
 //Initial test route
 app.get('/api/*', (req, res) => {
