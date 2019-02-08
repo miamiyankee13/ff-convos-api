@@ -1,0 +1,38 @@
+{
+  "name": "ff-convos-api",
+  "version": "1.0.0",
+  "description": "API for FF Convos client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miamiyankee13/ff-convos-api.git"
+  },
+  "author": "Anthony D'Amico",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miamiyankee13/ff-convos-api/issues"
+  },
+  "homepage": "https://github.com/miamiyankee13/ff-convos-api#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.10",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  }
+}
