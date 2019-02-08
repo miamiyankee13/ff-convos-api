@@ -35,11 +35,6 @@ passport.use(jwtStrategy);
 //Enable use of routers
 app.use('/api/auth', authRouter);
 
-//Initial test route
-app.get('/api/*', (req, res) => {
-    res.json({ok: true});
-});
-
 //Catch all handler if route does not exist
 app.use('*', (req, res) => {
     res.status(404).json({ message: "Not found" });
