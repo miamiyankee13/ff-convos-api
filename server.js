@@ -9,6 +9,7 @@ const cors = require('cors');
 
 //Import modules
 const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require('./config');
+const { localStrategy, jwtStrategy } = require('./strategies');
 
 //Configure mongoose to use ES6 promises
 mongoose.Promise = global.Promise; 
@@ -25,6 +26,10 @@ app.use(
         origin: CLIENT_ORIGIN
     })
 );
+
+//Enable use of passport authentication strategies
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 //Initial test route
 app.get('/api/*', (req, res) => {
