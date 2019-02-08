@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: nZYogE1I82r0E0GgduikkiLsZlc4rFf8eRGDL0Jd+1rzDnkz/jLZ1kJGSInhtirPAI4rAvrUTsDbCiw4tAT1WxV+Y5byUd6uPNlPC8/b1rYiCygt55fdf2Y2sUw2c438pfVkS8FchynTgDUnQcBM0fQJPXOwWRNaSaI17s9KGRfyDtF9t1ZiV5p+2MEhulJAdGinvXWpr3YTiM/o1Ivj2SLsnlWfPWAd6bnYHmDaOuhvbL2AA/c5Z2aUbt5GCvcG4Q86BSCC1vhWF2b+/AboplQrOjjDGFJ+jZ/vvrGqzz4NzBYvy5HiP0215ktv2mwUDpVZxCXzM+iclciLMVDNJQjhdi1U4JEVaLc45gQk/Vixa2bEHP/vzRgb8NBfX+g0KkC3/uzIMM3fpt1glqOljjmdCDzbZUTnkJV/zcM1d47V0TdFNsGdklnAKy+0tr86c1z1fvj30YCdz1TIrDQdVTmwVLdOi8EMbDQJd6KwtZ38gVgQUdZ04dB1gg04hCggVDYs4Pjruu7xWKGo97tzJAgjbim5FsmOO3XDWUhXz7GG2tT210s3SmY8NJyj8N+25082EHVkxf4GE5zjEnqxKEOmodvC/cphHRgPgfjwMBI1OFqQ7HsUpk+EJePtJ9i8BTzuoTRq7mmRYI+GeOTHvirm3iUumMzI45lNJYI6cWo=
+  app: ff-convos-api
+  on:
+    repo: miamiyankee13/ff-convos-api
