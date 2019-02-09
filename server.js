@@ -11,6 +11,7 @@ const cors = require('cors');
 const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require('./config');
 const { localStrategy, jwtStrategy } = require('./strategies');
 const authRouter = require('./routers/auth-router');
+const usersRouter = require('./routers/users-router');
 
 //Configure mongoose to use ES6 promises
 mongoose.Promise = global.Promise; 
@@ -34,6 +35,7 @@ passport.use(jwtStrategy);
 
 //Enable use of routers
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter)
 
 //Catch all handler if route does not exist
 app.use('*', (req, res) => {
