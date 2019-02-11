@@ -113,4 +113,69 @@ router.post('/', jsonParser, (req, res) => {
         });
 });
 
+//GET route handler for all user's players
+//-find current user & return array of players
+//-send JSON response
+router.get('/players', jwtAuth, (req, res) => {
+    return User.findOne({username: req.user.username}, "players")
+        .populate({
+            model: Player,
+            path: 'players'
+        })
+        .then(players => {
+            return res.status(200).json(players);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+//GET route handler for all user's players by position
+//-find current user & return array of players for specific position
+//-send JSON response
+router.get('/players/:position', jwtAuth, (req, res) => {
+    return User.findOne({ username: req.user.username }, 'players')
+        .populate({
+            model: Player,
+            path: 'players',
+            match: { position: { $eq: req.params.position } }
+        })
+        .then(players => {
+            return res.status(200).json(players);
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+//PUT route handler for adding a player to a user
+//-find current user & add player to array of players
+//-send JSON response
+router.put('/players/:id', jwtAuth, (req, res) => {
+    return User.updateOne({ username: req.user.username }, { $push: { players: req.params.id }}, { new: true })
+        .then(() => {
+            return res.status(200).json({ message: 'Player added to user ' });
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+//DELETE route handler for removing a player from a user
+//-find current user & remove player from array of players
+//-send JSON response
+router.delete('/players/:id', jwtAuth, (req, res) => {
+    return User.updateOne({ username: req.user.username }, { $pull: { players: req.params.id }}, { new: true })
+        .then(() => {
+            return res.status(200).json({ message: 'Player removed from user '});
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
 module.exports = router;
