@@ -12,6 +12,7 @@ const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require('./config');
 const { localStrategy, jwtStrategy } = require('./strategies');
 const authRouter = require('./routers/auth-router');
 const usersRouter = require('./routers/users-router');
+const playersRouter = require('./routers/players-router');
 
 //Configure mongoose to use ES6 promises
 mongoose.Promise = global.Promise; 
@@ -35,7 +36,8 @@ passport.use(jwtStrategy);
 
 //Enable use of routers
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter)
+app.use('/api/users', usersRouter);
+app.use('/api/players', playersRouter);
 
 //Catch all handler if route does not exist
 app.use('*', (req, res) => {
