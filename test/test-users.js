@@ -90,7 +90,7 @@ describe('users endpoints', function() {
         return closeServer();
     });
 
-    describe('/api/users', function() {
+    describe('POST /api/users', function() {
 
         it('Should reject users with missing username', function() {
             return chai.request(app)
@@ -312,7 +312,7 @@ describe('users endpoints', function() {
         });
     });
 
-    describe('/api/players', function() {
+    describe('PUT, GET, & DELETE /api/users/players', function() {
 
         it('Should login, create a player, & add a player to user', function() {
             let playerId;
@@ -334,6 +334,7 @@ describe('users endpoints', function() {
                             .then(function(res) {
                                 expect(res).to.have.status(200);
                                 expect(res.body).to.be.a('object');
+                                expect(res.body.message).to.equal('Player added to user');
                             });
                         })
                         .catch(function(err) {
