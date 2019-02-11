@@ -18,7 +18,7 @@ const commentSchema = mongoose.Schema({
 const playerSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true },
     position: { type: String, required: true },
-    number: { type: Number, required: true },
+    number: { type: String, required: true },
     team: { type: String, required: true },
     comments: [commentSchema]
 });
