@@ -180,6 +180,7 @@ router.put('/players/:id', jwtAuth, (req, res) => {
 });
 
 //DELETE route handler for removing a player from a user
+//-validate ID
 //-find current user & remove player from array of players
 //-send JSON response
 router.delete('/players/:id', jwtAuth, (req, res) => {
