@@ -34,13 +34,13 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //POST route handler for user login
 router.post('/login', localAuth, (req, res) => {
     const authToken = createAuthToken(req.user.serialize());
-    res.json({authToken});
+    return res.json({authToken});
 });
 
 //POST route handler for JWT refresh
 router.post('/refresh', jwtAuth, (req, res) => {
     const authToken = createAuthToken(req.user);
-    res.json({authToken})
+    return res.json({authToken})
 });
 
 module.exports = router;
