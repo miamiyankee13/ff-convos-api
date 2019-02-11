@@ -235,7 +235,7 @@ describe('players endpoints', function() {
 
     });
 
-    describe('PUT /api/players', function() {
+    describe('PUT /api/players/:id', function() {
 
         it('Should update a player', function() {
             return createUserAndLogin()
@@ -282,6 +282,46 @@ describe('players endpoints', function() {
                 });
         });
 
+    });
+
+    describe('DELETE /api/players/:id & /api/players/:id/:commentId', function() {
+
+        it('Should delete a player', function() {
+            let player;
+            return createUserAndLogin()
+                .then(function(token) {
+                    return Player.findOne()
+                        .then(function(_player) {
+                            player = _player;
+                            return chai.request(app)
+                                .delete(`/api/players/${player.id}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(204);
+                                    return Player.findById(player._id);
+                                })
+                                .then(function(_player) {
+                                    expect(_player).to.be.null;
+                                })
+                                .catch(function(err) {
+                                    if (err instanceof chai.AssertionError) {
+                                        throw err;
+                                    }
+                                });
+                        })
+                        .catch(function(err) {
+                            if (err instanceof chai.AssertionError) {
+                                throw err;
+                            }
+                        });
+                })
+                .catch(function(err) {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+                });
+
+        });
     });
 
 });
