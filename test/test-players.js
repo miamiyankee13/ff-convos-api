@@ -102,7 +102,7 @@ describe('players endpoints', function() {
         return closeServer();
     });
 
-    describe('GET /api/players', function() {
+    describe('GET endpoints', function() {
 
         it('Should return all existing players', function() {
             let response;
@@ -155,7 +155,7 @@ describe('players endpoints', function() {
         });
     });
 
-    describe('POST /api/players & /api/players/:id', function() {
+    describe('POST endpoints', function() {
 
         it('Should add a new player', function() {
             return createUserAndLogin()
@@ -235,7 +235,7 @@ describe('players endpoints', function() {
 
     });
 
-    describe('PUT /api/players/:id', function() {
+    describe('PUT endpoints', function() {
 
         it('Should update a player', function() {
             return createUserAndLogin()
@@ -284,7 +284,7 @@ describe('players endpoints', function() {
 
     });
 
-    describe('DELETE /api/players/:id & /api/players/:id/:commentId', function() {
+    describe('DELETE endpoints', function() {
 
         it('Should delete a player', function() {
             let player;
@@ -320,8 +320,60 @@ describe('players endpoints', function() {
                         throw err;
                     }
                 });
+        });
 
+        it('Should add a new player, add a comment, & delete a comment', function() {
+            let playerId;
+            let commentId;
+            return createUserAndLogin()
+                .then(function(token) {
+                    const newPlayer = generatePlayerData();
+                    return chai.request(app)
+                        .post('/api/players')
+                        .set('authorization', `Bearer ${token}`)
+                        .send(newPlayer)
+                        .then(function(res) {
+                            expect(res).to.have.status(201);
+                            playerId = res.body._id;
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .post(`/api/players/${playerId}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .send({comment: { content: 'Test', author: 'Author'}})
+                                .then(function(res) {
+                                    expect(res).to.have.status(201);
+                                    expect(res.body).to.be.a('object');
+                                });
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .get(`/api/players/${playerId}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    commentId = res.body.comments[0]._id;
+                                });
+                        }).then(function() {
+                            return chai.request(app)
+                                .delete(`/api/players/${playerId}/${commentId}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    expect(res.body).to.be.a('object');
+                                    expect(res.body.message).to.equal('Comment removed from player');
+                                });
+                        })
+                        .catch(function(err) {
+                            if (err instanceof chai.AssertionError) {
+                                throw err;
+                            }
+                        });
+                })
+                .catch(function(err) {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+                });
         });
     });
-
 });
