@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const faker = require('faker');
 const jwt = require('jsonwebtoken');
 
 //Import modules
@@ -66,7 +65,10 @@ describe('users endpoints', function() {
     const firstName = 'Derek';
     const lastName = 'Jeter';
 
-    //TODO: create fake player fields
+    const name = 'Dan Marino';
+    const position = 'QB';
+    const number = '13';
+    const team = 'Dolphins';
 
     //Activate server before tests run
     before(function() {
@@ -308,6 +310,135 @@ describe('users endpoints', function() {
                     }
                 });
         });
+    });
+
+    describe('/api/players', function() {
+
+        it('Should login, create a player, & add a player to user', function() {
+            let playerId;
+            return createUserAndLogin()
+                .then(function(token) {
+                    return chai.request(app)
+                        .post('/api/players')
+                        .set('authorization', `Bearer ${token}`)
+                        .send({name, position, number, team})
+                        .then(function(res) {
+                            expect(res).to.have.status(201);
+                            expect(res.body).to.be.a('object');
+                            playerId = res.body._id;
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                            .put(`/api/users/players/${playerId}`)
+                            .set('authorization', `Bearer ${token}`)
+                            .then(function(res) {
+                                expect(res).to.have.status(200);
+                                expect(res.body).to.be.a('object');
+                            });
+                        })
+                        .catch(function(err) {
+                            if (err instanceof chai.AssertionError) {
+                                throw err;
+                            }
+                        });
+                })
+                .catch(function(err) {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+                });
+        });
+
+        it('Should login, create a player, add a player to user, & retreive user players', function() {
+            let playerId;
+            return createUserAndLogin()
+                .then(function(token) {
+                    return chai.request(app)
+                        .post('/api/players')
+                        .set('authorization', `Bearer ${token}`)
+                        .send({name, position, number, team})
+                        .then(function(res) {
+                            expect(res).to.have.status(201);
+                            expect(res.body).to.be.a('object');
+                            playerId = res.body._id;
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .put(`/api/users/players/${playerId}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    expect(res.body).to.be.a('object');
+                                });
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .get('/api/users/players')
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    expect(res.body).to.be.a('object');
+                                });
+                        })
+                        .catch(function(err) {
+                            if (err instanceof chai.AssertionError) {
+                                throw err;
+                            }
+                        });
+                })
+                .catch(function(err) {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+                });
+        });
+
+        it('Should login, create a player, add a player to user, & remove the player from user', function() {
+            let playerId;
+            return createUserAndLogin()
+                .then(function(token) {
+                    return chai.request(app)
+                        .post('/api/players')
+                        .set('authorization', `Bearer ${token}`)
+                        .send({name, position, number, team})
+                        .then(function(res) {
+                            expect(res).to.have.status(201);
+                            expect(res.body).to.be.a('object');
+                            playerId = res.body._id;
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .put(`/api/users/players/${playerId}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    expect(res.body).to.be.a('object');
+                                    expect(res.body.message).to.equal('Player added to user');
+                                });
+                        })
+                        .then(function() {
+                            return chai.request(app)
+                                .delete(`/api/users/players/${playerId}`)
+                                .set('authorization', `Bearer ${token}`)
+                                .then(function(res) {
+                                    expect(res).to.have.status(200);
+                                    expect(res.body).to.be.a('object');
+                                    expect(res.body.message).to.equal('Player removed from user');
+                                });
+                        })
+                        .catch(function(err) {
+                            if (err instanceof chai.AssertionError) {
+                                throw err;
+                            }
+                        });
+                })
+                .catch(function(err) {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+                });
+        });
+
     });
 
 });

@@ -171,7 +171,7 @@ router.put('/players/:id', jwtAuth, (req, res) => {
 
     return User.updateOne({ username: req.user.username }, { $push: { players: req.params.id }}, { new: true })
         .then(() => {
-            return res.status(200).json({ message: 'Player added to user ' });
+            return res.status(200).json({ message: 'Player added to user' });
         })
         .catch(err => {
             console.error(err);
@@ -199,7 +199,7 @@ router.delete('/players/:id', jwtAuth, (req, res) => {
     
     return User.updateOne({ username: req.user.username }, { $pull: { players: req.params.id }}, { new: true })
         .then(() => {
-            return res.status(200).json({ message: 'Player removed from user '});
+            return res.status(200).json({ message: 'Player removed from user' });
         })
         .catch(err => {
             console.error(err);
