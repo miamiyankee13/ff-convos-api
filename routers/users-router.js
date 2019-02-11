@@ -3,6 +3,7 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const objectID = require('mongodb').ObjectID;
 
 //Import modules
 const { User, Player } = require('../models');
@@ -151,9 +152,23 @@ router.get('/players/:position', jwtAuth, (req, res) => {
 });
 
 //PUT route handler for adding a player to a user
+//-validate ID
 //-find current user & add player to array of players
 //-send JSON response
 router.put('/players/:id', jwtAuth, (req, res) => {
+    if(!objectID.isValid(req.params.id)){
+        return res.status(400).json({ message: 'Bad ID' });
+    }
+
+    Player.findById(req.params.id)
+        .then(player => {
+            if (!player) {
+                return res.status(404).json({ message: 'ID not found'});
+            } else {
+                console.log('ID validated');
+            }
+        });
+
     return User.updateOne({ username: req.user.username }, { $push: { players: req.params.id }}, { new: true })
         .then(() => {
             return res.status(200).json({ message: 'Player added to user ' });
@@ -168,6 +183,19 @@ router.put('/players/:id', jwtAuth, (req, res) => {
 //-find current user & remove player from array of players
 //-send JSON response
 router.delete('/players/:id', jwtAuth, (req, res) => {
+    if(!objectID.isValid(req.params.id)){
+        return res.status(400).json({ message: 'Bad ID' });
+    }
+
+    Player.findById(req.params.id)
+        .then(player => {
+            if (!player) {
+                return res.status(404).json({ message: 'ID not found'});
+            } else {
+                console.log('ID validated');
+            }
+        });
+    
     return User.updateOne({ username: req.user.username }, { $pull: { players: req.params.id }}, { new: true })
         .then(() => {
             return res.status(200).json({ message: 'Player removed from user '});
