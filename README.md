@@ -14,6 +14,8 @@ This API can be easily accessed via the FF CONVOS CLIENT
 * Remove a comment from a strain
 * Add a player to a user
 * Remove a player from a user
+* Get all user players
+* Get all user players by position
 * Register user
 * Authenticate user
 * Refresh authentication
