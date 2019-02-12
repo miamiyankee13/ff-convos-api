@@ -10,8 +10,8 @@ This API can be easily accessed via the [FF Convos](https://ff-convos-client.her
 * Create a player
 * Edit a player
 * Delete a player
-* Add a comment to a strain
-* Remove a comment from a strain
+* Add a comment to a player
+* Remove a comment from a player
 * Add a player to a user
 * Remove a player from a user
 * Get all user players
