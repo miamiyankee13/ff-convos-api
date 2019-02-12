@@ -2,7 +2,7 @@
   "name": "ff-convos-api",
   "version": "1.0.0",
   "description": "API for FF Convos client",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha --exit",
     "start": "node server.js"

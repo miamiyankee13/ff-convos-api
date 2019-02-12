@@ -2,7 +2,7 @@
 
 ## Summary
 FF Convos allows you to keep track of fantasy football players through conversations.
-This API can be easily accessed via the <FF CONVOS CLIENT>
+This API can be easily accessed via the FF CONVOS CLIENT
 
 ## Features
 * Get all players
