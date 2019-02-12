@@ -24,11 +24,13 @@ const app = express();
 app.use(morgan('common'));
 
 //Enable CORS
-app.use(
-    cors({
-        origin: CLIENT_ORIGIN
-    })
-);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
 
 //Enable use of passport authentication strategies
 passport.use(localStrategy);
