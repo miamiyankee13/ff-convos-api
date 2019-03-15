@@ -30,7 +30,8 @@ This API can be easily accessed via the [FF Convos Client](https://github.com/mi
 * MongoDB
 * Mongoose
 * JSON Web Token (JWT)
-* Passport
+* Mocha
+* Chai
 
 ## Authors
 * **Anthony D'Amico** [miamiyankee13](https://github.com/miamiyankee13)
