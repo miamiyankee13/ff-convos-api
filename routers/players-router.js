@@ -141,7 +141,7 @@ router.put('/:id', jsonParser, jwtAuth, (req, res) => {
         })
 });
 
-//DELETE route handler for removing strain from DB
+//DELETE route handler for removing player from DB
 //-validate ID
 //-delete player & send response status
 router.delete('/:id', jwtAuth, (req, res) => {
